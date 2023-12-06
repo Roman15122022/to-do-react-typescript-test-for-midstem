@@ -1,0 +1,16 @@
+.todo{
+  @apply flex flex-col justify-center items-center;
+
+  h1{
+    @apply text-xl font-bold mt-5;
+  }
+  .todo__input{
+    @apply border-2 my-5 w-72 p-1;
+  }
+  .todo__btn{
+    @apply bg-blue-500 py-1.5 px-5 rounded hover:bg-blue-700 active:shadow-2xl active:text-sm;
+    transition: all .2s linear;
+    color: white;
+  }
+
+}
