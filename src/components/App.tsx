@@ -10,6 +10,7 @@ const App: React.FC = () => {
     const [counter, setCounter] = useState(0);
     const [currentId, setCurrentId] = useState(1);
 
+
     const inputRef = useRef<HTMLInputElement>(null);
     const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
         setValue(event.target.value);
