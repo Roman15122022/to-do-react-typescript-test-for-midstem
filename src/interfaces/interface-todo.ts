@@ -1,7 +1,7 @@
 export interface ITodo {
     id: number;
-    title: string;
     complete: boolean;
+    title: string;
 }
 
 export interface ITodoItem extends ITodo {
