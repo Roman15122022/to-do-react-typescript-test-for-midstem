@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/to-do-react-typescript-test-for-midstem/static/css/main.9155551c.css",
+    "main.js": "/to-do-react-typescript-test-for-midstem/static/js/main.dfd72dc6.js",
+    "index.html": "/to-do-react-typescript-test-for-midstem/index.html",
+    "main.9155551c.css.map": "/to-do-react-typescript-test-for-midstem/static/css/main.9155551c.css.map",
+    "main.dfd72dc6.js.map": "/to-do-react-typescript-test-for-midstem/static/js/main.dfd72dc6.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9155551c.css",
+    "static/js/main.dfd72dc6.js"
+  ]
+}
