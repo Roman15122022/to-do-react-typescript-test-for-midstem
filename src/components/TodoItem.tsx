@@ -4,7 +4,8 @@ import {FaTrash, FaEdit} from 'react-icons/fa';
 import styles from '../styles/todo-item.module.scss';
 import {useToggleTodoMutation} from "../hooks/useToggleToDoMutation";
 import {ITodo} from "../interfaces/interface-todo";
-import {useDelete} from "../hooks/useDelete";
+import {useDeleteTodo} from "../hooks/useDeleteTodo";
+import {useEditTodoMutation} from "../hooks/useEditTodo";
 
 
 const TodoItem: React.FC<ITodo> = (props) => {
@@ -13,7 +14,9 @@ const TodoItem: React.FC<ITodo> = (props) => {
     const [isEditing, setIsEditing] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
     const {mutate: toggle} = useToggleTodoMutation()
-    const {mutate: del} = useDelete()
+    const {mutate: deleteTodo} = useDeleteTodo()
+    const {mutate: editTodo} = useEditTodoMutation()
+
 
     useEffect(() => {
         if (isEditing && inputRef.current) {
@@ -31,8 +34,8 @@ const TodoItem: React.FC<ITodo> = (props) => {
 
     const handleSaveEdit = () => {
         if (editedTitle) {
-            setEditedTitle(editedTitle);
             setIsEditing(false);
+            editTodo({id, editedTitle});
         } else {
             alert('Empty field')
         }
@@ -75,7 +78,7 @@ const TodoItem: React.FC<ITodo> = (props) => {
                         >
                             <FaEdit/>
                         </button>
-                        <button className={styles.remove} onClick={() => del({id})}>
+                        <button className={styles.remove} onClick={() => deleteTodo({id})}>
                             <FaTrash/>
                         </button>
                     </>

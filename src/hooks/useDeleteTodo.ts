@@ -5,7 +5,7 @@ interface TodoMutateProps {
     id: number;
 }
 
-const useDelete = (): UseMutationResult<any, unknown, TodoMutateProps, unknown> => {
+const useDeleteTodo = (): UseMutationResult<any, unknown, TodoMutateProps, unknown> => {
     const client = useQueryClient();
 
     return useMutation({
@@ -14,4 +14,4 @@ const useDelete = (): UseMutationResult<any, unknown, TodoMutateProps, unknown> 
     });
 };
 
-export { useDelete };
+export { useDeleteTodo };
