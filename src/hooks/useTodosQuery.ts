@@ -1,25 +1,14 @@
-/*import { useToast } from '@chakra-ui/react';
-import { useQuery } from '@tanstack/react-query';
-import { fetchTodos } from '../services/todos';
-import { TodoState } from '../types/todo';*/
+import {TodoState} from "../types/types-todo";
+import {useQuery} from "react-query";
+import {fetchTodos} from "../services/todo-service";
 
-/*const useTodosQuery = (state: TodoState) => {
-    const toast = useToast()
+const useTodosQuery = (state: TodoState) => {
 
     return useQuery({
         queryFn: () => fetchTodos(state),
         queryKey: ['todos', state],
         staleTime: 1000 * 5,
-        onError: (err) => {
-            if (err instanceof Error) {
-                toast({
-                    status: 'error',
-                    title: err.message,
-                    position: 'top-right'
-                })
-            }
-        }
     });
-};*/
+};
 
-export { /*useTodosQuery*/ };
+export { useTodosQuery };

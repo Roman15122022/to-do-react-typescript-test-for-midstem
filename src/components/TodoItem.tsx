@@ -1,15 +1,19 @@
 import React, {useState, useRef, useEffect} from 'react';
-import {ITodoItem} from '../interfaces/interface-todo';
 import {FaTrash, FaEdit} from 'react-icons/fa';
 // @ts-ignore
 import styles from '../styles/todo-item.module.scss';
-const TodoItem: React.FC<ITodoItem> = (props) => {
-    const {id, title, complete, removeTodo, toggleTodo} = props;
+import {useToggleTodoMutation} from "../hooks/useToggleToDoMutation";
+import {ITodo} from "../interfaces/interface-todo";
+import {useDelete} from "../hooks/useDelete";
 
+
+const TodoItem: React.FC<ITodo> = (props) => {
+    const {id, title, completed} = props;
     const [editedTitle, setEditedTitle] = useState(title);
     const [isEditing, setIsEditing] = useState(false);
-
     const inputRef = useRef<HTMLInputElement>(null);
+    const {mutate: toggle} = useToggleTodoMutation()
+    const {mutate: del} = useDelete()
 
     useEffect(() => {
         if (isEditing && inputRef.current) {
@@ -45,8 +49,8 @@ const TodoItem: React.FC<ITodoItem> = (props) => {
                 <input
                     type='checkbox'
                     name={id.toString()}
-                    checked={complete}
-                    onChange={() => toggleTodo(id)}
+                    checked={completed}
+                    onChange={() => toggle({id, completed})}
                 />
                 {isEditing ? (
                     <input
@@ -58,7 +62,7 @@ const TodoItem: React.FC<ITodoItem> = (props) => {
                     />
                 ) : (
                     <label className='ml-3' htmlFor={id.toString()}>
-                        {complete ? <s>{editedTitle}</s> : editedTitle}
+                        {completed ? <s>{editedTitle}</s> : editedTitle}
                     </label>
                 )}
             </div>
@@ -71,7 +75,7 @@ const TodoItem: React.FC<ITodoItem> = (props) => {
                         >
                             <FaEdit/>
                         </button>
-                        <button className={styles.remove} onClick={() => removeTodo(id)}>
+                        <button className={styles.remove} onClick={() => del({id})}>
                             <FaTrash/>
                         </button>
                     </>
@@ -93,3 +97,7 @@ const TodoItem: React.FC<ITodoItem> = (props) => {
 };
 
 export default TodoItem;
+
+
+
+

@@ -3,9 +3,7 @@ import { Todo, TodoState } from '../types/types-todo'
 const BASE = 'http://localhost:3000/todos'
 
 export async function fetchTodos(state: TodoState = 'all'): Promise<Todo[]> {
-    const queries = state === 'all' ? '' : `?completed=${state === 'completed'}`
-
-    const res = await fetch(`${BASE}/${queries}`)
+    const res = await fetch(BASE)
 
     if (!res.ok) throw new Error('Failed to fetch todos!')
 
@@ -32,4 +30,16 @@ export async function createTodo(title: string) {
         }
     })
     return res.json()
+}
+export async function deleteTodo(todoId: number) {
+    const res = await fetch(`${BASE}/${todoId}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+
+    if (!res.ok) throw new Error('Failed to delete todo!');
+
+    return res.json();
 }

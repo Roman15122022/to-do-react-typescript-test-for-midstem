@@ -1,15 +1,14 @@
 import React, {useState, useEffect, useRef} from 'react';
 // @ts-ignore
 import styles from '../styles/App.module.scss'
-import {ITodo} from '../interfaces/interface-todo'
 import TodoList from "./TodoList";
+import {useTodosQuery} from "../hooks/useTodosQuery";
+import {useCreateTodo} from "../hooks/useCreateTodo";
 
 const App: React.FC = () => {
     const [value, setValue] = useState('');
-    const [todos, setTodos] = useState<ITodo[]>([]);
-    const [counter, setCounter] = useState(0);
-    const [currentId, setCurrentId] = useState(1);
-
+    const {data, isLoading} = useTodosQuery('all');
+    const {mutate} = useCreateTodo();
 
     const inputRef = useRef<HTMLInputElement>(null);
     const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
@@ -22,36 +21,23 @@ const App: React.FC = () => {
     }
     const addTodo = () => {
         if (value) {
-            setCounter(counter + 1);
-            setTodos([...todos, {
-                id: currentId,
-                title: value,
-                complete: false,
-            }])
-            setCurrentId(currentId + 1);
+            mutate(value)
             setValue('');
         }
-    }
-    const removeTodo = (id: number): void => {
-        setTodos(todos.filter(item => item.id !== id))
-        setCounter(counter - 1);
-    }
-    const toggleTodo = (id: number): void => {
-        setTodos(todos.map(item => {
-            if (item.id !== id) return item;
-            return {
-                ...item,
-                complete: !item.complete
-            }
-        }))
     }
     useEffect(() => {
         inputRef.current?.focus()
     }, [])
 
+    if (isLoading){
+        return (
+            <div className='text-center'>Loading...</div>
+        )
+    }
+
     return (
         <section className={styles.todo}>
-            <h1>Todos ({counter})</h1>
+            <h1>Todos ({data?.length})</h1>
         <div>
             <input
                 className={styles.todo__input}
@@ -64,7 +50,9 @@ const App: React.FC = () => {
             <button className={styles.todo__btn} onClick={addTodo}>Submit</button>
         </div>
             <div>
-                <TodoList items={todos} removeTodo={removeTodo} toggleTodo={toggleTodo}/>
+                <TodoList
+                    items={data || []}
+                />
             </div>
     </section>
     );
